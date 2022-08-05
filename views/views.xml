@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="gpsmap_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/gpsmap/static/src/css/index.css"/>
+            <t t-set="gpsmap_key" t-value="request.env['ir.config_parameter'].sudo().get_param('gpsmap_key')"/>            
+            <script t-attf-src="https://maps.googleapis.com/maps/api/js?key={{gpsmap_key}}"></script>                                    
+            <script type="text/javascript" src="/gpsmap/static/src/js/maplabel.js"/>
+            <script type="text/javascript" src="/gpsmap/static/src/js/index.js"/>
+            
+        </xpath>
+    </template>
+    <!-- FLEET -->
+    
+    
+    
+    <record id="view_gpsmap_vehicle_form_inherit" model="ir.ui.view">
+        <field name="name">gpsmap.vehicle.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">            
+                <group col="4" string="GPS Configuration">                    
+                    <field name="gps1_id"/>
+                    <field name="economic_number"/>
+                    <field name="image_vehicle"/>
+                    <field name="speed"/>
+                    <field name="temporal_id"/>
+                </group>                
+            </xpath>
+            <xpath expr="//sheet/div/button[@name='toggle_active']" position="after">            
+                <button name="toggle_motor" type="object" class="oe_stat_button" icon="fa-key" confirm="Are you sure you want to do this?">
+                    <field name="motor" widget="boolean_button" options='{"terminology": "active"}' groups="gpsmap.gpsmap_group_admin" />                    
+                </button>                  
+            </xpath>       
+
+                <!--
+                <button string="STOP"  icon="fa-key" id="action_stopmotor"  custom="click"/>                 
+                <button string="START" icon="fa-key" id="action_startmotor"  custom="click"/>
+                -->
+        </field>
+    </record>        
+
+
+    <record id="view_gpsmap_vehicle_odometer_search_inherit" model="ir.ui.view">
+        <field name="name">gpsmap.vehicle.odometer.search</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='groupby_vehicle']" position="after">            
+                <filter name="groupby_day" context="{'group_by': 'date:day', 'order_by': 'date DESC'}" string="Day"/>
+                <filter name="groupby_week" context="{'group_by': 'date:week', 'order_by': 'date DESC'}" string="Week"/>
+                <filter name="groupby_month" context="{'group_by': 'date:month', 'order_by': 'date DESC'}" string="Month"/>            
+            </xpath>
+        </field>
+    </record>        
+
+
+
+    <record id="view_gpsmap_vehicle_odometer_tree_inherit" model="ir.ui.view">
+        <field name="name">gpsmap.vehicle.tree</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='driver_id']" position="before">            
+                <field name="activeTime"/>                
+            </xpath> 
+        </field>
+    </record>
+
+    
+    
+    <record id='tc_devices_view_form' model='ir.ui.view'>
+        <field name="name">tc_devices.form</field>
+        <field name="model">tc_devices</field>
+        <field name="arch" type="xml">
+            <form string="GPS">
+                <group col="4" string="GPS Configuration">                   
+                    <field name="name" />
+                    <field name="lastupdate"/>
+                    <field name="uniqueid"/>
+                    <field name="icc"/>
+                                        
+                    <field name="phone"/>
+                    <field name="disabled"/>
+                    <field name="telcel"/>
+                    <field name="signal"/>                   
+                </group>                
+            </form>
+        </field>
+    </record>
+    <record id='tc_devices_view_tree' model='ir.ui.view'>
+        <field name="name">tc_devices.tree</field>
+        <field name="model">tc_devices</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="uniqueid"/>
+                <field name="icc"/>
+                <field name="lastupdate"/>                    
+                <field name="phone"/>
+                <field name="disabled"/>
+                <field name="telcel"/>
+                <field name="signal"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- POSITIONS -->
+
+    <!-- SMTP -->
+    <record id="gpsmap_mail_alert" model="ir.mail_server"> 
+        <field name="name">gpsmap SMTP Alert</field>
+        <field name="smtp_host">solesgps.com</field>
+        <field name="smtp_port">465</field>
+        <field name="sequence">465</field>
+        <field name="smtp_encryption">ssl</field>
+        <field name="smtp_user">odoo_alerts@solesgps.com</field>
+        <field name="smtp_pass">Odoo_alerts1</field>          
+    </record>
+    
+    
+    <!-- SPEED -->
+
+    <record id='gpsmap_speed_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap.speed.tree</field>
+        <field name="model">gpsmap.speed</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="deviceid" />
+                <field name="speed" />
+                <field name="starttime" />
+                <field name="endtime" />
+            </tree>
+        </field>
+    </record>
+
+
+
+    <!-- GEOFENCE -->
+
+
+
+    <!-- ############################### -->    
+    <record id='gpsmap_tc_geofences_view_form' model='ir.ui.view'>
+        <field name="name">tc_geofences.form</field>
+        <field name="model">tc_geofences</field>
+        <field name="arch" type="xml">
+            <form string="Geofence">
+                <header>
+                    <button string="ADD POINT" id ="action_addpoint" custom="click"/>
+                    <button string="END POINT" id ="action_endpoint_geofence" custom="click"/>
+                    <button string="CLEAR POINT" id ="action_clearpoint" custom="click"/>                    
+                </header>
+
+                <group  col="6">
+                    <field name="name"/>                            
+                    <field name="color"/>                    
+                    <field name="hidden"/>                                                                
+                    <field name="area" class="points" invisible="1"/>
+                </group>
+                <div id="map_tree" style="width:100%; height:350px;"> MAPA</div>
+                <script>
+                    local.vehicles      =Array();
+                    local.positions     =undefined;    
+                    gpsmaps_obj.map("map_tree");
+                    setTimeout(function()
+                    {                
+                        limpiar_virtual();
+                        limpiar_real();	        
+                        if($("textarea[name='area']").length>0)
+                        {
+                            google.maps.event.addListener(map, 'click', function(event) 
+                            { 		                   
+                                elocation   =event.latLng;
+	                            latitud     = new String(event.latLng.lng());
+	                            longitud    = new String(event.latLng.lat());	                            
+	                            coordinate  ={latitude:latitud,longitude:longitud};
+	                            limpiar_virtual();
+                                marker          =markerMap(elocation);
+	                            locationsMarker.push(marker);						
+                            });        
+                        }
+                        else
+                        {
+                            var flightPlanCoordinates=array_points($("span[name='area']").html());                             
+                            poligono(flightPlanCoordinates,{color:$("span[name='color']").html(),geofence:$("span[name='name']").html()});	
+                        }    
+
+                        limpiar_virtual();
+                        limpiar_real();	                 
+                        
+                    },1000);
+                    
+                </script>
+            </form>
+        </field>
+    </record>
+
+    <record id='gpsmap_tc_geofences_view_tree' model='ir.ui.view'>
+        <field name="name">tc_geofences.tree</field>
+        <field name="model">tc_geofences</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ############################### -->    
+    <record id='gpsmap_geofence_device_view_form' model='ir.ui.view'>
+        <field name="name">gpsmap.geofence_device.form</field>
+        <field name="model">gpsmap.geofence_device</field>
+        <field name="arch" type="xml">
+            <form string="Geofence">
+                <group  col="4">
+                    <field name="name"/>                            
+                    <field name="description"/>
+                </group>                
+                <notebook>
+                    <page string="Device">
+                        <field name="device_ids"/>                            
+                    </page>
+                    <page string="Geofence">
+                        <field name="geofence_ids"/>                            
+                    </page>
+                    <page string="Contact">
+                        <group  col="4">
+                            <field name="mail_in"/>
+                            <field name="mail_out"/>                        
+                        </group>
+                    </page>
+                </notebook>    
+            </form>
+        </field>
+    </record>
+
+
+    <record id='gpsmap_geofence_device_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap.geofence_device.tree</field>
+        <field name="model">gpsmap.geofence_device</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="description"/>
+                <field name="device_ids"/>
+                <field name="geofence_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ROUTE -->
+
+
+
+    <!-- ############################### -->    
+
+    <record id='gpsmap_route_view_form' model='ir.ui.view'>
+        <field name="name">gpsmap.route.form</field>
+        <field name="model">gpsmap.route</field>
+        <field name="arch" type="xml">
+            <form string="route">
+                <header>
+                    <button string="ADD POINT" id ="action_addpoint" custom="click"/>
+                    <button string="END POINT" id ="action_endpoint_route" custom="click"/>
+                    <button string="CLEAR POINT" id ="action_clearpoint" custom="click"/>                    
+                    <field name="name"/>
+                </header>
+                <div id="map_tree" style="width:100%; height:350px;"> MAPA</div>
+                <script>
+                    local.vehicles      =Array();
+                    local.positions     =undefined;    
+                    gpsmaps_obj.map("map_tree");
+                    setTimeout(function()
+                    {                
+                        limpiar_virtual();
+                        limpiar_real();	        
+                        if($("textarea[name='area']").length>0)
+                        {
+                            google.maps.event.addListener(map, 'click', function(event) 
+                            { 		                   
+                                elocation   = event.latLng;
+	                            latitud     = new String(event.latLng.lng());
+	                            longitud    = new String(event.latLng.lat());	                            
+	                            coordinate  ={latitude:latitud,longitude:longitud};
+	                            limpiar_virtual();
+                                marker          =markerMap(elocation);
+	                            locationsMarker.push(marker);						
+                            });        
+                        }
+                        else
+                        {
+                            array_route($("span[name='area']").html());                        
+                        }    
+
+                        limpiar_virtual();
+                        limpiar_real();	                 
+                        
+                    },1000);
+                    
+                </script>
+            </form>
+        </field>
+    </record>
+
+    <record id='gpsmap_route_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap.route.tree</field>
+        <field name="model">gpsmap.route</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="points"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ############################### -->    
+
+    <record id='gpsmap_device_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap_device.tree</field>
+        <field name="model">gpsmap_device</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="protocol"/>
+            </tree>
+        </field>
+    </record>
+    <record id='gpsmap_device_view_form' model='ir.ui.view'>
+        <field name="name">gpsmap_device.form</field>
+        <field name="model">gpsmap_device</field>
+        <field name="arch" type="xml">
+            <form string="Geofence">
+                <group  col="4">
+                    <field name="name" />
+                    <field name="protocol"/>
+                </group>                
+            </form>
+        </field>
+    </record>
+
+    <record id='gpsmap_commands_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap_commands.tree</field>
+        <field name="model">gpsmap_commands</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='device_commands_view_form' model='ir.ui.view'>
+        <field name="name">device_commands.form</field>
+        <field name="model">device_commands</field>
+        <field name="arch" type="xml">
+            <form string="Commands">
+                <field name="commands_id"/>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

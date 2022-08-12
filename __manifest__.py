@@ -28,15 +28,25 @@ Main Features
 """,
     'depends': [
         'fleet',
-        
     ],
     'data': [
+        # DATA
         'data/data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         #'views/solesgpsmap_website.xml',
+
+        # VIEW
+        'views/assets_backend.xml',
+        'views/fleet_vehicle_odometer.xml',
+        'views/fleet_vehicle.xml',
+        'views/gpsmap_geofence_device.xml',
+        'views/gpsmap_route.xml',
+        'views/tc_devices.xml',
+        'views/tc_geofences.xml',
         'views/views.xml',
         'views/menuitem.xml',
+        
     ],
     'demo': ['data/demo.xml'],
     'qweb': ['static/src/xml/*.xml'],

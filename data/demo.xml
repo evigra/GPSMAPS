@@ -1,37 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-
+      <record id="fleet.vehicle_1" model="fleet.vehicle">
+          <field name="image_vehicle">02</field>
+      </record>
+      <record id="fleet.vehicle_2" model="fleet.vehicle">
+          <field name="image_vehicle">05</field>
+      </record>
+      <record id="fleet.vehicle_3" model="fleet.vehicle">
+          <field name="image_vehicle">90</field>
+      </record>
+      <record id="fleet.vehicle_4" model="fleet.vehicle">
+          <field name="image_vehicle">06</field>
+      </record>
+      <record id="fleet.vehicle_5" model="fleet.vehicle">
+          <field name="image_vehicle">01</field>
+      </record>
 
 
 
 
 <!--
 
-      <record id="fleet.vehicle_1" model="fleet.vehicle"> 
-          <field name="image_vehicle">02</field>
-      </record>
-      <record id="fleet.vehicle_2" model="fleet.vehicle"> 
-          <field name="image_vehicle">05</field>
-      </record>
-      <record id="fleet.vehicle_3" model="fleet.vehicle"> 
-          <field name="image_vehicle">90</field>
-      </record>
-      <record id="fleet.vehicle_4" model="fleet.vehicle"> 
-          <field name="image_vehicle">06</field>
-      </record>
-      <record id="fleet.vehicle_5" model="fleet.vehicle"> 
-          <field name="image_vehicle">01</field>
-      </record>
-      
+
+
 
       <record id="position_1_1" model="gpsmap.positions">
-          <field name="protocol">tk103</field>             
-          <field name="deviceid" ref="fleet.vehicle_1" />          
+          <field name="protocol">tk103</field>
+          <field name="deviceid" ref="fleet.vehicle_1" />
           <field name="servertime">2019-11-26 00:40:11</field>
           <field name="devicetime">2019-11-26 00:40:04</field>
           <field name="fixtime">2019-11-26 00:42:04</field>
-          <field name="valid">1</field>          
+          <field name="valid">1</field>
           <field name="latitude">19.10276</field>
           <field name="longitude">-104.32722</field>
           <field name="altitude ">0</field>
@@ -41,17 +40,17 @@
           <field name="address">0</field>
           <field name="attributes">{"ignition":false,"door":false,"fuel":80.8,"distance":0.0,"totalDistance":1.246451185E7,"motion":false}</field>
           <field name="other">0</field>
-          <field name="leido">0</field>          
+          <field name="leido">0</field>
       </record>
 
 
       <record id="position_2_1" model="gpsmap.positions">
-          <field name="protocol">tk103</field>             
-          <field name="deviceid" ref="fleet.vehicle_2" />          
+          <field name="protocol">tk103</field>
+          <field name="deviceid" ref="fleet.vehicle_2" />
           <field name="servertime">2019-11-26 00:41:11</field>
           <field name="devicetime">2019-11-26 00:41:04</field>
           <field name="fixtime">2019-11-26 00:42:04</field>
-          <field name="valid">1</field>                    
+          <field name="valid">1</field>
           <field name="latitude">19.1135</field>
           <field name="longitude">-104.34222429957507</field>
           <field name="altitude ">0</field>
@@ -61,16 +60,16 @@
           <field name="address">0</field>
           <field name="attributes">{"ignition":false,"door":false,"fuel1":15.2,"distance":15.39,"totalDistance":2684288.21,"motion":false}</field>
           <field name="other">0</field>
-          <field name="leido">0</field>          
+          <field name="leido">0</field>
       </record>
 
       <record id="position_3_1" model="gpsmap.positions">
-          <field name="protocol">tk103</field>             
-          <field name="deviceid" ref="fleet.vehicle_3" />          
+          <field name="protocol">tk103</field>
+          <field name="deviceid" ref="fleet.vehicle_3" />
           <field name="servertime">2019-11-26 00:42:11</field>
           <field name="devicetime">2019-11-26 00:42:04</field>
           <field name="fixtime">2019-11-26 00:42:04</field>
-          <field name="valid">1</field>     
+          <field name="valid">1</field>
           <field name="latitude">19.11114</field>
           <field name="longitude">-104.31674</field>
           <field name="altitude ">0</field>
@@ -79,12 +78,12 @@
           <field name="address">0</field>
           <field name="attributes">{"status":68,"ignition":false,"charge":true,"blocked":false,"battery":6,"rssi":4,"distance":0.0,"totalDistance":1.125956205E7,"motion":true}</field>
           <field name="other">0</field>
-          <field name="leido">0</field>          
+          <field name="leido">0</field>
       </record>
 
       <record id="position_4_1" model="gpsmap.positions">
-          <field name="protocol">tk103</field>             
-          <field name="deviceid" ref="fleet.vehicle_4" />          
+          <field name="protocol">tk103</field>
+          <field name="deviceid" ref="fleet.vehicle_4" />
           <field name="servertime">2019-11-26 00:43:11</field>
           <field name="devicetime">2019-11-26 00:43:04</field>
           <field name="fixtime">2019-11-26 00:42:04</field>
@@ -97,11 +96,11 @@
           <field name="address">0</field>
           <field name="attributes">{"status":68,"ignition":false,"charge":true,"blocked":false,"battery":6,"rssi":4,"distance":0.0,"totalDistance":1.126141508E7,"motion":true}</field>
           <field name="other">0</field>
-          <field name="leido">0</field>          
+          <field name="leido">0</field>
       </record>
       <record id="position_5_1" model="gpsmap.positions">
-          <field name="protocol">tk103</field>             
-          <field name="deviceid" ref="fleet.vehicle_5" />          
+          <field name="protocol">tk103</field>
+          <field name="deviceid" ref="fleet.vehicle_5" />
           <field name="servertime">2019-11-26 00:44:11</field>
           <field name="devicetime">2019-11-26 00:44:04</field>
           <field name="fixtime">2019-11-26 00:42:04</field>
@@ -114,8 +113,11 @@
           <field name="address">0</field>
           <field name="attributes">{"status":68,"ignition":false,"charge":true,"blocked":false,"battery":6,"rssi":4,"distance":0.0,"totalDistance":1.125956205E7,"motion":true}</field>
           <field name="other">0</field>
-          <field name="leido">0</field>          
+          <field name="leido">0</field>
       </record>
+
+
+
 
       <record id="base.user_demo" model="res.users">
         <field name="groups_id" eval="[(4, ref('fleet.fleet_group_manager'))]" />
@@ -1057,5 +1059,5 @@
         <field name="date">2012-01-01</field>
         <field name="parent_id" ref="log_contract_5_fleet_vehicle_cost" />
       </record>
--->      
+-->
 </odoo>

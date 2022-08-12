@@ -1,0 +1,41 @@
+<odoo>
+    <record id='gpsmap_geofence_device_view_form' model='ir.ui.view'>
+        <field name="name">gpsmap.geofence_device.form</field>
+        <field name="model">gpsmap.geofence_device</field>
+        <field name="arch" type="xml">
+            <form string="Geofence">
+                <group  col="4">
+                    <field name="name"/>                            
+                    <field name="description"/>
+                </group>                
+                <notebook>
+                    <page string="Device">
+                        <field name="device_ids"/>                            
+                    </page>
+                    <page string="Geofence">
+                        <field name="geofence_ids"/>                            
+                    </page>
+                    <page string="Contact">
+                        <group  col="4">
+                            <field name="mail_in"/>
+                            <field name="mail_out"/>                        
+                        </group>
+                    </page>
+                </notebook>    
+            </form>
+        </field>
+    </record>
+
+    <record id='gpsmap_geofence_device_view_tree' model='ir.ui.view'>
+        <field name="name">gpsmap.geofence_device.tree</field>
+        <field name="model">gpsmap.geofence_device</field>
+        <field name="arch" type="xml">
+            <tree string="Models">
+                <field name="name" />
+                <field name="description"/>
+                <field name="device_ids"/>
+                <field name="geofence_ids"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

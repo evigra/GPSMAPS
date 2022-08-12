@@ -6,7 +6,7 @@
 
 
 
-
+<!--
 
       <record id="fleet.vehicle_1" model="fleet.vehicle"> 
           <field name="image_vehicle">02</field>
@@ -117,7 +117,6 @@
           <field name="leido">0</field>          
       </record>
 
-<!--
       <record id="base.user_demo" model="res.users">
         <field name="groups_id" eval="[(4, ref('fleet.fleet_group_manager'))]" />
       </record>

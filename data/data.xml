@@ -1,63 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <record id="gpsmap_key_map" model="ir.config_parameter"> 
+    <record id="gpsmap_key" model="ir.config_parameter"> 
         <field name="key">gpsmap_key</field>
-        <!--
-        <field name="value">AIzaSyA9DH6EDTSe3u7pKNAafndHxwX1BkGW1Q4</field>
-        -->
         <field name="value">AIzaSyCTDTeSJ3Uu3hHCy73RzGoJbx6vmKcmmUI</field>
     </record>
-    <record id="gpsmap_traccar_host" model="ir.config_parameter"> 
-        <field name="key">traccar_host</field>
-        <field name="value">http://odoo.solesgps.com:8082</field>
-    </record>
-    <record id="gpsmap_traccar_user" model="ir.config_parameter"> 
-        <field name="key">traccar_user</field>
-        <field name="value">admin</field>
-    </record>
-    <record id="gpsmap_traccar_pass" model="ir.config_parameter"> 
-        <field name="key">traccar_pass</field>
-        <field name="value"></field>
-    </record>
-
     <record id="gpsmap_host" model="ir.config_parameter"> 
         <field name="key">gpsmap_host</field>
-        <field name="value">http://solesgps.com/sitio_web/ajax/odoo.php?key=</field>
+        <!--
+        <field name="value">http://odoo.solesgps.com:8082</field>
+        -->
+        <field name="value">http://localhost:8069</field>
+    </record>
+    <record id="gpsmap_user" model="ir.config_parameter"> 
+        <field name="key">gpsmap_user</field>
+        <field name="value">webmaster@solesgps.com</field>
+    </record>
+    <record id="gpsmap_pass" model="ir.config_parameter"> 
+        <field name="key">gpsmap_pass</field>
+        <field name="value">EvG30JiC06</field>
     </record>
 
+    <record forcecreate="True" id="ir_cron_gpsmap_position_get" model="ir.cron">
+        <field name="name">GPSMap: Read positions lalo</field>
+        <field name="model_id" ref="model_gpsmap_positions"/>
+        <field name="state">code</field>
+        <field name="code">model.run_scheduler_get_position()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+        <field name="active" eval="False"/>
+    </record>
 
-        <record forcecreate="True" id="ir_cron_gpsmap_position_get" model="ir.cron">
-            <field name="name">GPSMap: Read positions lalo</field>
-            <field name="model_id" ref="model_gpsmap_positions"/>
-            <field name="state">code</field>
-            <field name="code">model.run_scheduler_get_position()</field>
-            <field name="user_id" ref="base.user_root" />
-            <field name="interval_number">1</field>
-            <field name="interval_type">minutes</field>
-            <field name="numbercall">-1</field>
-            <field eval="False" name="doall" />
-            <field name="active" eval="False"/>
-        </record>
+    <record forcecreate="True" id="ir_cron_fleet_vehicle_odometer_set" model="ir.cron">
+        <field name="name">FLEET: Odometer</field>
+        <field name="model_id" ref="model_fleet_vehicle_odometer"/>
+        <field name="state">code</field>
+        <field name="code">model.run_scheduler_set_odometer()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+        <field name="active" eval="True"/>
+    </record>
 
-        <record forcecreate="True" id="ir_cron_fleet_vehicle_odometer_set" model="ir.cron">
-            <field name="name">FLEET: Odometer</field>
-            <field name="model_id" ref="model_fleet_vehicle_odometer"/>
-            <field name="state">code</field>
-            <field name="code">model.run_scheduler_set_odometer()</field>
-            <field name="user_id" ref="base.user_root" />
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-            <field eval="False" name="doall" />
-            <field name="active" eval="True"/>
-        </record>
-
-
-    <data noupdate="1">
-        
-        
-    </data>        
-
-  
 </odoo>

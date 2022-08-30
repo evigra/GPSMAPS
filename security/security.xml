@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
+<!--
         <record id="fleet.fleet_rule_vehicle_visibility_manager" model="ir.rule">
             <field name="active" eval="False"/>
         </record>
@@ -23,19 +24,6 @@
         </record>
 
 
-        
-        <record id="rule_gpsmap_cost_visibility_admin" model="ir.rule">
-            <field name="name">User can only see his/her costs</field>
-            <field name="model_id" ref="model_fleet_vehicle_cost"/>
-            <field name="groups" eval="[(4, ref('gpsmap_group_admin'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>
-            <field name="domain_force"></field>
-        </record>
-        <!-- MODULE tc_device -->
-
 
         <record id="rule_tc_device_template" model="ir.rule">
             <field name="name">Temporal can only see his/her temporal vehicle</field>
@@ -48,26 +36,11 @@
             <field name="perm_unlink" eval="False"/>            
         </record>
 
-
-        <!-- FIN MODULE tc_device -->
-        <!-- MODULE fleet_vehicle -->
-
         <record id="rule_fleet_vehicle_template" model="ir.rule">
             <field name="name">Temporal can only see his/her temporal vehicle</field>
             <field name="model_id" ref="model_fleet_vehicle"/>
             <field name="domain_force">[('temporal_id','=',user.partner_id.id)]</field>
             <field name="groups" eval="[(4, ref('gpsmap_group_template'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_unlink" eval="False"/>            
-        </record>
-        
-        <record id="rule_fleet_vehicle_user" model="ir.rule">
-            <field name="name">Temporal can only see his/her user vehicle</field>
-            <field name="model_id" ref="model_fleet_vehicle"/>
-            <field name="domain_force">[('driver_id','=',user.partner_id.id)]</field>
-            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -85,19 +58,8 @@
             <field name="perm_unlink" eval="True"/>            
         </record>        
 
-        <record id="rule_fleet_vehicle_manager" model="ir.rule">
-            <field name="name">Manager has all rights on vehicle</field>
-            <field name="model_id" ref="model_fleet_vehicle"/>
-            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
-            <field name="domain_force"></field>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>            
-        </record>        
 
-        <!-- FIN MODULE fleet_vehicle -->
-        
+
         <record id="rule_fleet_vehicle_odometer" model="ir.rule">
             <field name="name">Admin has all rights on vehicle</field>
             <field name="model_id" ref="model_fleet_vehicle_odometer"/>
@@ -109,16 +71,7 @@
             <field name="perm_unlink" eval="False"/>            
         </record>        
 
-        <record id="rule_fleet_vehicle_log_fuel" model="ir.rule">
-            <field name="name">Admin has all rights on vehicle</field>
-            <field name="model_id" ref="model_fleet_vehicle_log_fuel"/>
-            <field name="groups" eval="[(4, ref('gpsmap_group_admin'))]"/>
-            <field name="domain_force"></field>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>            
-        </record>        
+       
 
         <record id="rule_fleet_vehicle_log_services" model="ir.rule">
             <field name="name">Admin has all rights on vehicle</field>
@@ -144,9 +97,6 @@
 
 
 
-        <!-- MODULE gpsmap_positions -->
-
-        <!-- MODULE gpsmap_speed -->
 
         <record id="rule_gpsmap_speed_template" model="ir.rule">
             <field name="name">User can only see his/her manager speed</field>
@@ -159,7 +109,6 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <!-- MODULE gpsmap_geofence -->
 
         <record id="rule_gpsmap_geofence_template" model="ir.rule">
             <field name="name">User can only see his/her manager geofence</field>
@@ -184,7 +133,6 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- MODULE gpsmap_geofence_device -->
 
         <record id="rule_gpsmap_geofence_device_temporal" model="ir.rule">
             <field name="name">User can only see his/her geofence_device</field>
@@ -197,7 +145,6 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- MODULE VARIOS -->
 
         <record id="gpsmap_mail_chanel" model="mail.channel">
             <field name="name">SolesGPS</field>
@@ -205,6 +152,103 @@
             <field name="email_send" eval="True"/>
             <field name="public">groups</field>
         </record>
+
+
+
+        <record id="rule_fleet_vehicle_user" model="ir.rule">
+            <field name="name">Temporal can only see his/her user vehicle</field>
+            <field name="model_id" ref="model_fleet_vehicle"/>
+            <field name="domain_force">[('driver_id','=',user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>            
+        </record>
+
+        <record id="rule_fleet_vehicle_manager" model="ir.rule">
+            <field name="name">Manager has all rights on vehicle</field>
+            <field name="model_id" ref="model_fleet_vehicle"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="domain_force"></field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>            
+        </record>        
+
+-->   
+        <record id="rule_gps_positions_user" model="ir.rule">
+            <field name="name">Temporal can only see his/her user vehicle</field>
+            <field name="model_id" ref="model_gps_positions"/>
+            <!--
+            <field name="domain_force">[('driver_id','=',user.partner_id.id)]</field>
+            -->
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>            
+        </record>
+
+
+        <record id="rule_gps_positions_manager" model="ir.rule">
+            <field name="name">Manager has all rights on vehicle</field>
+            <field name="model_id" ref="model_gps_positions"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="domain_force"></field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>            
+        </record>        
+
+        <record id="rule_gps_commands_manager" model="ir.rule">
+            <field name="name">Manager has all rights on vehicle</field>
+            <field name="model_id" ref="model_gps_commands"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="domain_force"></field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>            
+        </record>        
+
+        <record id="rule_gps_protocol_manager" model="ir.rule">
+            <field name="name">Manager has all rights on vehicle</field>
+            <field name="model_id" ref="model_gps_protocol"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="domain_force"></field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>            
+        </record>        
+        <record id="rule_gps_mirror_manager" model="ir.rule">
+            <field name="name">Manager has all rights on vehicle</field>
+            <field name="model_id" ref="model_gps_mirror"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="domain_force"></field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>            
+        </record>        
+
+
+        <record id="rule_gpsmap_geofence_user" model="ir.rule">
+            <field name="name">User can only see his/her manager geofence</field>
+            <field name="model_id" ref="model_gps_geofences"/>
+            <field name="domain_force"></field>            
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- FIN MODULE fleet_vehicle -->
+        
 
     
 </odoo>

@@ -13,12 +13,13 @@
                     <field name="temporal_id"/>
                 </group>                
             </xpath>
+            <!--
             <xpath expr="//sheet/div/button[@name='toggle_active']" position="after">            
                 <button name="toggle_motor" type="object" class="oe_stat_button" icon="fa-key" confirm="Are you sure you want to do this?">
                     <field name="motor" widget="boolean_button" options='{"terminology": "active"}' groups="gpsmap.gpsmap_group_admin" />                    
                 </button>                  
             </xpath>       
-
+            -->
                 <!--
                 <button string="STOP"  icon="fa-key" id="action_stopmotor"  custom="click"/>                 
                 <button string="START" icon="fa-key" id="action_startmotor"  custom="click"/>

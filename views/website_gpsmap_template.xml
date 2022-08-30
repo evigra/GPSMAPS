@@ -1,0 +1,226 @@
+<odoo>
+    <template id="maponline" name="maponline">
+
+        <t t-name="gpsmap.gpsmaps_maponline">        
+            <div style="position:relative; width:100%; height:100%;">                        
+                <t t-call="gpsmap.menu_vehicles"/>                                    
+                <div id="maponline" style="top:0px; left:250px; width: calc(100% - 250px); height:100%;">
+                    MAPA
+                </div>  
+                <div id="tableros" class="o_main_navbar" style="z-index:100; font-size:25px; text-align:left; position:absolute; bottom:0px; left:0px; width:100%; height:70px; color:#ccc; padding:10px;">
+                    TABLEROS
+                </div>                              
+                
+                <t t-call="gpsmap.gpsmaps_odometers"/>
+                
+            </div>
+        </t>
+    </template>
+    <template id="menu_vehicles" name="menu_vehicles">
+
+        <t t-name="gpsmap.menu_vehicles">        
+            
+            <div id="menu_vehicles" style="width:250px; height: calc(100% - 70px); position:absolute; top:0px; left:0px; display: block;"> 
+                <div class="vehicle vehicle_active" vehicle="0" style="float:left; padding-top:8px; padding-left:8px; height:35px; width:250px: display: block;">
+                    <div class="filter_vehicle" style="float:left; height:35px; width:35px: display: block;">
+                        Todos los vehiculos
+                    </div>
+                </div>             
+                <div id="vehicles" style="width:100%; height: calc(100% - 35px); position:absolute; top:35px; left:0px; overflow-y: scroll; display: block;"> 
+                <t t-if="vehicles">            
+                    
+                    <t t-foreach="vehicles" t-as="vehicle">                        
+                        <t t-set="gps" t-value="vehicle.gps1_id"/>
+                        <t t-set="position" t-value="vehicle.positionid"/>
+
+                        <div 
+                            class="vehicle" 
+                            style="float:left; display: block; width:100%; height:35px;" 
+                            position="" latitude="" longitude="" speed="" time="" date="" distance=""
+                            t-att-device_id="gps[0]" 
+                            t-att-vehicle="vehicle.id"
+                        >
+                            <div style="padding-top:5px; padding-left:5px; float:left; width:40px; height:100%; display: block;">                            
+                                <t t-set='image_path' t-value="'/gpsmap/static/img/vehicles/vehicle_' + vehicle.image_vehicle +  '/i135.png'"/>
+                                <img height="18" t-att-src="image_path" />
+                            </div>
+                            <div style="float:left; position:relative; width:180px; height:100%; display: block;">                            
+                                <div style="position:absolute; top:1px; left:0px; font-size:15px;">
+                                    <t t-esc="vehicle.economic_number"/>                                
+                                </div>
+                                <div style="position:absolute; top:16px; left:0px; font-size:9px;">
+                                    <b><t t-esc="vehicle.license_plate"/></b>
+                                </div>
+                            </div>
+                            <div class="event_device" style="padding-top:6px; float:left; width:30px; height:100%; display: block;"/>
+                        </div>                
+                    
+                    </t>
+                </t>
+                </div>    
+            </div> 
+
+        </t>        
+
+    </template>
+
+
+    <template id="gpsmaps_odometers" name="gpsmaps_odometers">
+        <t t-name="gpsmaps_odometers">        
+            
+            <div id="odometer" style="z-index:101; position:absolute; bottom:0px; height:0px; width:300px; right:0px;  ">
+                <div id="speed" style="z-index:110; overflow:hidden;position:absolute; bottom:-10px; right:150px; width:250px; height:225px">
+                    <t t-call="gpsmap.gpsmaps_odometers_speed"/>                    
+                </div>
+                <!--
+                <div id="speed" style="z-index:100; overflow:hidden;position:absolute; bottom:-50px; right:300px; width:250px; height:225px">
+                    <t t-call="gpsmaps_template_batery"/>                    
+                </div>
+
+                <div id="speed" style="z-index:100; overflow:hidden;position:absolute; bottom:-50px; right:0px; width:250px; height:225px">
+                    <t t-call="gpsmaps_odometers_gas"/>                    
+                </div>
+                -->
+            </div>                
+        </t>
+
+    </template>
+
+
+    <template id="gpsmaps_odometers_speed" name="gpsmaps_odometers_speed">
+    <t t-name="gpsmaps_odometers_speed">        
+        
+            <div style="z-index:100; position:absolute; bottom:100px; right:0px; width:370px; height:250px">                    
+                <!-- AGUJA -->
+                <svg style="width:380px; height:400px;">		                   
+                    <text font-size="23px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 21px &quot;Arial&quot;;" text-anchor="end" width="150" y="290" x="253">
+                        <tspan id="distance">000000000</tspan>
+                    </text>
+                    <text font-size="23px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 15px &quot;Arial&quot;;" text-anchor="end" width="150" y="220" x="253">
+                        <tspan id="unity">0000 / HR</tspan>
+                    </text>
+
+
+                    <path class="speed" transform="rotate(-110 250 250)" cy="250" cx="250" stroke-width="0" style="stroke-width: 0;" d="M251.11304347826086,166.52173913043478L252.7826086956522,250L251.94782608695652,269.47826086956525L248.05217391304348,269.47826086956525L247.2173913043478,250L248.88695652173914,166.52173913043478Z" stroke="#000000" fill="#ff6622"></path>
+                    <path class="speed" transform="rotate(-110 250 250)" opacity="0.5" style="opacity: 0.5;" d="M251.11304347826086,166.52173913043478C251.11304347826086,166.52173913043478,252.7826086956522,250,252.7826086956522,250C252.7826086956522,250,251.94782608695652,269.47826086956525,251.94782608695652,269.47826086956525C251.94782608695652,269.47826086956525,249.8528309178744,269.47826086956525,248.7355001610306,269.47826086956525" stroke="#ffffff" fill="none"></path>
+                    <path class="speed" transform="rotate(-110 250 250)" opacity="0.5" style="opacity: 0.5;" d="M248.7355001610306,269.47826086956525C248.32919806763283,269.47826086956525,248.05217391304348,269.47826086956525,248.05217391304348,269.47826086956525C248.05217391304348,269.47826086956525,247.2173913043478,250,247.2173913043478,250C247.2173913043478,250,248.88695652173914,166.52173913043478,248.88695652173914,166.52173913043478C248.88695652173914,166.52173913043478,251.11304347826086,166.52173913043478,251.11304347826086,166.52173913043478" stroke="#000000" fill="none"></path>           
+
+
+                    <!-- LINEA SECCIONAL TACOMETRO -->                        
+                    <path opacity="0.65" stroke-linecap="round" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: round; opacity: 0.65;" d="M169,279A85,85,10,1,1,330,280" stroke="#ffdd33" fill="none"></path>
+
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="279.3817855336773" x="178.87582098702137">
+                        <tspan>0 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="248.22133436619725" x="174.4973435734026">
+                        <tspan>15 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="217.9732926705771" x="183.16910841683006">
+                        <tspan>30 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="193.86584175530288" x="203.39224597603294">
+                        <tspan>45 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="180.06585041323024" x="231.6712918947108">
+                        <tspan>60 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="178.95857787034436" x="263.1183598718609">
+                        <tspan>75 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="190.73539257449687" x="292.2979874377013">
+                        <tspan>90 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="213.36075366556793" x="314.1666274281026">
+                        <tspan>105 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="242.92397023659203" x="324.9443989327246">
+                        <tspan>120 </tspan>
+                    </text>
+                    <text font-size="10px" fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" style="text-anchor: middle; font: 12px &quot;Arial&quot;;" text-anchor="middle" y="274.3152084012702" x="322.76842009040865">
+                        <tspan>135 </tspan>
+                    </text>
+
+                </svg>                     
+            </div>
+            <t t-call="gpsmap.gpsmaps_template_odometers"/>                    
+            <!--
+            
+            -->
+
+    </t>
+    </template>
+
+    <template id="gpsmap.gpsmaps_template_odometers" name="gpsmaps_odometers">
+    <t t-name="gpsmaps_template_odometers">        
+            
+                <div style="z-index:1; position:absolute; bottom:100px; right:0px; width:370px; height:250px">                                        
+                    <svg style="width:380px; height:400px;">
+                        <!-- FONDO -->
+                        
+                        <circle stroke-width="0" style="opacity: 1; fill-opacity: 1; stroke-width: 0;" fill-opacity="1" opacity="1" stroke="#333333" fill="url(#r-1ad5cc38271d43ad873613284f569139)" r="105.73913043478262" cy="250" cx="250"></circle>
+                        
+
+                        <circle stroke-width="2.782608695652174" style="stroke-width: 2.78261;" stroke="#ffffff" fill="none" r="105" cy="249" cx="249"></circle>
+                        <circle stroke-width="2.782608695652174" style="stroke-width: 2.78261;" stroke="#333333" fill="none" r="105" cy="250" cx="250"></circle>
+                        <circle stroke-width="2.782608695652174" style="stroke-width: 2.78261;" stroke="#cccccc" fill="none" r="105" cy="250" cx="250"></circle>
+                        <circle stroke-width="2.782608695652174" style="stroke-width: 9;" stroke="#333333" fill="none" r="112" cy="250" cx="250"></circle>
+                        <defs>
+                            <radialGradient fy="0.3155646940654273" fx="0.31551003284316154" id="r-1ad5cc38271d43ad873613284f569139">
+                                <stop stop-color="#555555" offset="0%"></stop>
+                                <stop stop-color="#2a2a2a" offset="100%"></stop>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- PUNTO BASE AGUJA -->
+                        <circle stroke-width="2.22609" style="stroke-width: 2.22609;" stroke="#000000" fill="#ffffff" r="2.22609" cy="310.10434782608695" cx="275.6"></circle>
+                        <circle stroke-width="0" style="stroke-width: 0;" stroke="#000" fill="#191919" r="10.017391304347827" cy="250.3079267716473" cx="250.30801803212273"></circle>
+                        <circle stroke-width="0" style="stroke-width: 0;" stroke="#000" fill="#666666" r="10.017391304347827" cy="249.6920732283527" cx="249.69198196787727"></circle>
+                        <circle stroke-width="0" style="stroke-width: 0;" stroke="#000" fill="#333333" r="9.460869565217392" cy="250" cx="250"></circle>		                                       
+
+                        <!-- ESCALA -->
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M169.46232670589183,279.3073099527472L157.95694480673353,283.4940685174254" stroke="#ffdd33" fill="none">                            </path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M161.27165261212036,262.4675727315207L156.86279063011392,263.0870794510993" stroke="#ffffff" fill="none">                            </path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M164.50434492870585,244.0226928951913L152.290679918521,243.16879188021863" stroke="#ffdd33" fill="none">                            </path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M163.86965111195886,225.30743025879414L159.5898822231121,224.0804702716535" stroke="#ffffff" fill="none">                            </path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M174.3238433543517,209.771222344717L163.5129638335448,204.024254108248" stroke="#ffdd33" fill="none">                            </path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M181.35483334639363,192.41527029586217L177.94389338845048,189.55391726708515" stroke="#ffffff" fill="none">                            </path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M197.22357264933143,182.4730871992914L189.68408302780733,172.82638537061877" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M210.7049763252996,169.47633196131252L208.75242856506605,165.47515590970073" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M229.24543346901075,166.84662842430475L226.28049539315515,154.9675753420626" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M246.84706018048132,160.45549167874952L246.69039236336238,156.0060751162029" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M264.85461338431304,165.59279830786068L266.97670101064347,153.53462663755508" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M283.5341133177254,166.91195486717746L285.2004046627055,162.7833563512608" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M297.8962504809265,178.92831487741935L304.73857197820166,168.77521700276498" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M314.42496903114755,187.7297553775828L317.6262097283475,184.6355817317484" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M322.65926929358676,204.54820331365391L333.0391649069563,198.05508950131875" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M334.1803032536596,219.31064444922455L338.3631754650215,217.7857075274469" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M334.8635105561734,238.02419888370153L346.9868692070554,236.31337015280175" stroke="#ffdd33" fill="none"></path>
+                        <path stroke-linecap="butt" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: butt;" d="M339.38550900751443,256.1960293307536L343.8270249830431,256.5039065645799" stroke="#ffffff" fill="none"></path>
+
+                        <path opacity="0.65" stroke-linecap="butt" stroke-width="2.782608695652174" style="stroke-width: 2.78261; stroke-linecap: butt; opacity: 0.65;" d="M332.3995345141392,273.57014951475867L344.17089658758766,276.9373137311528" stroke="#ffdd33" fill="none"></path>
+                        <path opacity="0.65" stroke-linecap="round" stroke-width="1.6695652173913045" style="stroke-width: 1.66957; stroke-linecap: round; opacity: 0.65;" d="M169.66944936510254,279.87035103558503A85.70434782608697,85.70434782608697,10,1,1,330.2584096516356,280.0636477574687" stroke="#ffdd33" fill="none"></path>
+                    </svg>                     
+                </div>                        
+        
+    </t>
+    </template>
+
+
+    <!--
+    <template id="gpsmaps_odometers" name="gpsmaps_odometers">
+
+    </template>
+    -->
+
+
+
+
+</odoo>

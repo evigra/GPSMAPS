@@ -174,20 +174,23 @@ class vehicle(models.Model):
             
         return return_positions    
 
-
     @api.model    
     def cron_positions(self):
         sql ="""            
             SELECT 
-                tp.* 
+                deviceid,protocol,tp.speed,tp.attributes,
+                to_char(devicetime, 'YYYY-MM-DD HH12:MI:SS') as devicetime,
+                to_char(servertime, 'YYYY-MM-DD HH12:MI:SS') as servertime, 
+                to_char(fixtime, 'YYYY-MM-DD HH12:MI:SS') as fixtime,
+                latitude,longitude,altitude,course
             FROM    
                 tc_positions tp JOIN 
                 tc_devices td on td.positionid=tp.id JOIN
-                fleet_vehicle fv on fv.gps1_id=td.id AND company_id='%s'            
+                fleet_vehicle fv on fv.gps1_id=td.id AND company_id='%s'   
         """ %(self.env.user.company_id.id)
+
         self.env.cr.execute(sql)
-        data  =self.env.cr.dictfetchall()
-        return   json.dumps(data[0])
+        return json.dumps(self.env.cr.dictfetchall())
 
     @api.multi
     def positions(self,datas):		   

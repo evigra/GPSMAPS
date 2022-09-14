@@ -179,9 +179,9 @@ class vehicle(models.Model):
         sql ="""            
             SELECT 
                 deviceid,protocol,tp.speed,tp.attributes,
-                to_char(devicetime, 'YYYY-MM-DD HH12:MI:SS') as devicetime,
-                to_char(servertime, 'YYYY-MM-DD HH12:MI:SS') as servertime, 
-                to_char(fixtime, 'YYYY-MM-DD HH12:MI:SS') as fixtime,
+                to_char(devicetime, 'YYYY-MM-DD HH24:MI:SS') as devicetime,
+                to_char(servertime, 'YYYY-MM-DD HH24:MI:SS') as servertime, 
+                to_char(fixtime, 'YYYY-MM-DD HH24:MI:SS') as fixtime,
                 latitude,longitude,altitude,course
             FROM    
                 tc_positions tp JOIN 

@@ -54,6 +54,13 @@ Main features
     ],
     'demo': ['data/demo.xml'],
     'qweb': ['static/xml/*.xml'],
+    'assets': {
+        'web.assets_common': [
+            'https://maps.googleapis.com/maps/api/js?key=AIzaSyCTDTeSJ3Uu3hHCy73RzGoJbx6vmKcmmUI',
+            '/gpsmap/static/js/maplabel.js',
+            '/gpsmap/static/js/index.js'
+        ],
+    },
     'installable': True,
     'application': True,
 }

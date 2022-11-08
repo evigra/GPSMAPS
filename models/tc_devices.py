@@ -31,9 +31,11 @@ class tc_devices(models.Model):
     def create(self, vals):
         if "uniqueid" in vals:            
             devices_arg = [('uniqueid', '=', vals["uniqueid"])]
-            return self.search(devices_arg)        
-        else:
-            return  super(tc_devices, self).create(vals)
+            data = self.search(devices_arg)
+            if(data):
+                return data 
+
+        return  super(tc_devices, self).create(vals)
     
 """    
     @api.one

@@ -185,8 +185,8 @@ class vehicle(models.Model):
                 latitude,longitude,altitude,course
             FROM    
                 tc_positions tp JOIN 
-                tc_devices td on td.positionid=tp.id JOIN
-                fleet_vehicle fv on fv.gps1_id=td.id AND company_id='%s'   
+                tc_devices td on td.positionid=tp.id JOIN                
+				tcdevices_res_company_rel on user_id=td.id AND cid='%s'
         """ %(self.env.user.company_id.id)
 
         self.env.cr.execute(sql)

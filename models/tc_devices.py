@@ -22,6 +22,8 @@ class tc_devices(models.Model):
     telcel                                      = fields.Boolean('Telcel', default=True)
     signal                                      = fields.Boolean('Good signal', default=True)
     company_ids                                 = fields.Many2many('res.company', 'tcdevices_res_company_rel', 'user_id', 'cid', string='Companies', default=lambda self: self.env.user.company_id)
+    #motor                                       = fields.Boolean('Motor', default=True, track_visibility="onchange")
+    motor                                       = fields.Boolean('Motor', default=True)
 
     _sql_constraints = [
         ('uniqueid_uniq', 'unique(uniqueid)', "The imei of the GPS device already exists"),
@@ -37,8 +39,54 @@ class tc_devices(models.Model):
 
         return  super(tc_devices, self).create(vals)
     
-"""    
+        """    
     @api.one
     def write(self, vals):  
         return super(tc_devices, self).write(vals)
-"""
+        """
+
+    @api.one
+    def execute_commands(self, vals):
+        data_return={"device":{},"status_command":{}}
+        traccar_host                 =self.env['ir.config_parameter'].sudo().get_param('traccar_host','')
+
+        device=vals[0]["device"]
+        command=vals[0]["command"]
+        sql ="""            
+            SELECT *
+            FROM    
+                tc_devices td JOIN                
+				tcdevices_res_company_rel on user_id=td.id AND cid='%s'
+            WHERE td.id='%s'
+        """ %(self.env.user.company_id.id, device)
+
+        self.env.cr.execute(sql)
+
+        device = self.env.cr.dictfetchall()[0]
+
+        print(device)
+        if(self.env.user.login=="developer"):
+            return {"status": "error", "message": "Developer user does not have permissions, needs a paid account"}
+
+        if(device["uniqueid"]):
+            path="/api/commands/send"
+            #url = "http://odoo.solesgps.com:8082/api/commands/send"
+            url = "%s%s" %(traccar_host,path)
+            payload = {
+                "id"            :0,
+                "description"   :"Nuevo...",
+                "deviceId"      :device["id"],
+                "type"          :command,
+                "textChannel"   :"false",
+                "attributes"    :{}
+            } 
+ 
+            ##headers = {	"Authorization": "Basic " + encoded		}
+            headers                 = {	"Authorization": "Basic YWRtaW46YWRtaW4=","content-type": "application/json"}
+            req                     = requests.post(url, data=json.dumps(payload), headers=headers)
+            req.raise_for_status()
+ 
+            json_traccar            = req.json()
+
+        return json.dumps(json_traccar)
+        

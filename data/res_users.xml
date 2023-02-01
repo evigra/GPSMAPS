@@ -1,20 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    
-    <record id="user_developer" model="res.users">
+     <record id="user_developer" model="res.users">
         <field name="name">Developer</field>
         <field name="login">developer</field>        
         <field name="password">developer</field>
         <field name="company_id" ref="base.main_company" />
         <field  name="company_ids" eval="[(6,0,[ref('base.main_company')])]"/>
     </record>
-
-
-    <data noupdate="1">
-        
-        
-    </data>        
-
-  
 </odoo>

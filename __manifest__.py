@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name' : 'GPSMap',
-    'price' : '395.0',
+    'name' : 'GPSMap SERVER',
+    'price' : '0.0',
     'currency' : 'EUR',
     'images': ['static/description/map_online.png'],    
     'author': "SolesGPS :: Eduardo Vizcaino",
@@ -28,28 +28,20 @@ Main Features
 """,
     'depends': [
         'fleet',
+        
     ],
     'data': [
         # DATA
-        'data/data.xml',
+        'data/res_users.xml',
+        
+        'security/security.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
-        #'views/solesgpsmap_website.xml',
-
+     
         # VIEW
-        'views/assets_backend.xml',
-        'views/fleet_vehicle_odometer.xml',
-        'views/fleet_vehicle.xml',
-        'views/gpsmap_geofence_device.xml',
-        'views/gpsmap_route.xml',
         'views/tc_devices.xml',
-        'views/tc_geofences.xml',
-        'views/views.xml',
-        'views/menuitem.xml',
-        
+        'views/menuitem.xml',        
     ],
-    'demo': ['data/demo.xml'],
-    'qweb': ['static/src/xml/*.xml'],
     'installable': True,
     'application': True,
 }

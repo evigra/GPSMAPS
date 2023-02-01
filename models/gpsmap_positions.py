@@ -14,15 +14,15 @@ class positions(models.Model):
     protocol                                    = fields.Char('Protocolo', size=15)
     deviceid                                    = fields.Many2one('fleet.vehicle',ondelete='set null', string="Vehiculo", index=True)
     servertime                                  = fields.Datetime('Server Time')
-    devicetime                                  = fields.Datetime('Device Time')
-    devicetime_compu                            = fields.Datetime('Device Time', compute='_get_date')
+    devicetime                                  = fields.Datetime()
+    devicetime_compu                            = fields.Datetime(compute='_get_date')
     fixtime                                     = fields.Datetime('Error Time')
     valid                                       = fields.Integer('Valido')
     latitude                                    = fields.Float('Latitud',digits=(5,10))
     longitude                                   = fields.Float('Longitud',digits=(5,10))
     altitude                                    = fields.Float('Altura',digits=(6,2))
-    speed                                       = fields.Float('Velocidad',digits=(3,2))
-    speed_compu                                 = fields.Float('Velocidad', compute='_get_speed', digits=(3,2))
+    speed                                       = fields.Float(digits=(3,2))
+    speed_compu                                 = fields.Float(compute='_get_speed', digits=(3,2))
     #gas_compu                                   = fields.Float('Gas', compute='_get_gas', digits=(5,2))
     gas                                         = fields.Float('Gas', digits=(5,2))
     course                                      = fields.Float('Curso',digits=(3,2))
@@ -33,7 +33,8 @@ class positions(models.Model):
     leido                                       = fields.Integer('Leido',default=0)
     event                                       = fields.Char('Evento', size=70)
     online                                      = fields.Boolean('Online', default=True)
-    @api.one
+    
+    #@api.one
     def _get_speed(self):    
         vehicle_obj                             =self.env['fleet.vehicle']        
         vehicle                                 =vehicle_obj.browse(self.deviceid.id)
@@ -43,7 +44,8 @@ class positions(models.Model):
         else:                                        ts=1.852
             
         self.speed_compu=self.speed * ts        
-    @api.one
+    
+    #@api.one
     def _get_date(self):            
         tz = pytz.timezone(self.env.user.tz) if self.env.user.tz else pytz.utc                            
         self.devicetime_compu=tz.localize(fields.Datetime.from_string(self.devicetime)).astimezone(pytz.utc)

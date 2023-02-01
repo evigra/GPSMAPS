@@ -1,105 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <menuitem name="GPS" id="menu_root" groups="gpsmap_group_template" web_icon="fleet,static/description/icon.png"/>    
-    <menuitem name="Geolocation" parent="menu_root" id="gpsmap_geolocation" sequence="2" groups="gpsmap_group_template"/>
+    <menuitem name="GPS" id="menu_root" web_icon="fleet,static/description/icon.png"/>    
+    <menuitem name="Geolocation" parent="menu_root" id="gpsmap_geolocation" sequence="2" />
     
-    <menuitem name="Configuration" parent="fleet.menu_root" id="fleet.fleet_configuration" sequence="100" groups="gpsmap.gpsmap_group_admin"/>
-    <menuitem action="fleet.fleet_vehicle_model_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_model_menu" groups="fleet.fleet_group_manager" sequence="1"/>
-    <menuitem action="fleet.fleet_vehicle_model_brand_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_model_brand_menu"  groups="fleet.fleet_group_manager" sequence="2"/>
-    <menuitem action="fleet.fleet_vehicle_service_types_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_service_types_menu" groups="fleet.fleet_group_manager" sequence="3"/>
-    <menuitem action="fleet.fleet_vehicle_contract_types_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_contract_types_menu" groups="fleet.fleet_group_manager" sequence="4"/>    
-    <menuitem action="fleet.fleet_vehicle_costs_action" parent="fleet.fleet_vehicles" id="fleet.fleet_vehicle_costs_menu" groups="gpsmap.gpsmap_group_admin"/>
+    <menuitem name="Configuration" parent="fleet.menu_root" id="fleet.fleet_configuration" sequence="100"/>
+    <menuitem action="fleet.fleet_vehicle_model_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_model_menu"  sequence="1"/>
+    <menuitem action="fleet.fleet_vehicle_service_types_action" parent="fleet.fleet_configuration" id="fleet.fleet_vehicle_service_types_menu" sequence="3"/>
         
-    <record id="action_gpsmap_maponline" model="ir.actions.client">
-        <field name="name">Map Online</field>
-        <field name="tag">gpsmap.maponline</field>
-    </record>
-    <menuitem id="menu_gpsmap_maponline" name="Online Map" sequence="1" parent="gpsmap_geolocation" action="action_gpsmap_maponline" groups="gpsmap_group_template"/>
 
-    <record id="action_gpsmap_street" model="ir.actions.client">
-        <field name="name">Street Online</field>
-        <field name="tag">gpsmap.streetonline</field>
-    </record>
-    <menuitem id="menu_gpsmap_streetonline" sequence="2" name="Online Street"  parent="gpsmap_geolocation" action="action_gpsmap_street" groups="gpsmap_group_template"/>    
 
-    <record id="action_gpsmap_maphistory" model="ir.actions.client">
-        <field name="name">History Map</field>
-        <field name="tag">gpsmap.maphistory</field>
-    </record>
-    <menuitem id="menu_gpsmap_maphistory" sequence="3" name="History Map"  parent="gpsmap_geolocation" action="action_gpsmap_maphistory" groups="gpsmap.gpsmap_group_admin"/>    
-
-    <!--
-    <record id='fleet_position_action' model='ir.actions.act_window'>
-        <field name="name">History Events</field>
-        <field name="res_model">gpsmap.positions</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,map</field>
-
-        <field name="context">{
-            "search_default_filter_day" : True,
-            "search_default_filter_week" : True,  
-            "search_default_groupby_devieid" : True
-        }</field>
-    </record>
-    <menuitem action="fleet_position_action" parent="fleet.fleet_vehicles" id="fleet_position_menu" groups="gpsmap.gpsmap_group_admin"/>
-    -->
 
     <record id='fleet_tc_devices_action' model='ir.actions.act_window'>
         <field name="name">GPS</field>
         <field name="res_model">tc_devices</field>
     </record>
-    <menuitem action="fleet_tc_devices_action" parent="fleet.fleet_configuration" id="fleet_tc_devices_menu" groups="gpsmap.gpsmap_group_admin"/>
+    <menuitem action="fleet_tc_devices_action" parent="fleet.fleet_configuration" id="fleet_tc_devices_menu"/>
 
 
 
 
-    <!--
-    <record id='fleet_speed_action' model='ir.actions.act_window'>
-        <field name="name">Speed</field>
-        <field name="res_model">gpsmap.speed</field>
-    </record>
-    <menuitem action="fleet_speed_action" parent="fleet.fleet_vehicles" id="fleet_speed_menu" groups="gpsmap.gpsmap_group_admin"/>
-    -->
-
-    <record id='gpsmap_route_action' model='ir.actions.act_window'>
-        <field name="name">Route</field>
-        <field name="res_model">gpsmap.route</field>
-    </record>
-    <menuitem action="gpsmap_route_action" parent="fleet.fleet_configuration" id="gpsmap_route_menu" groups="gpsmap.gpsmap_group_admin"/>
-
-    
-    <record id='fleet_geofence_device_action' model='ir.actions.act_window'>
-        <field name="name">Alerts Geofence</field>
-        <field name="res_model">gpsmap.geofence_device</field>
-    </record>
-    <menuitem action="fleet_geofence_device_action" parent="fleet.fleet_configuration" id="fleet_geofence_device_menu" groups="fleet.fleet_group_user"/>
-    
-    
-    <record id='fleet_geofence_action' model='ir.actions.act_window'>
-        <field name="name">Geofence</field>
-        <field name="res_model">tc_geofences</field>
-    </record>
-    <menuitem action="fleet_geofence_action" parent="fleet.fleet_configuration" id="fleet_geofence_menu" groups="fleet.fleet_group_user"/>
 
     <!-- ############################### -->    
 
     
-    <record id='fleet_gpsmap_device_action' model='ir.actions.act_window'>
-        <field name="name">Device</field>
-        <field name="res_model">gpsmap_device</field>
-    </record>    
-    <menuitem action="fleet_gpsmap_device_action" parent="fleet.fleet_configuration" id="fleet_gpsmap_device_menu" groups="fleet.fleet_group_manager"/>
-
-    <record id='fleet_gpsmap_commands_action' model='ir.actions.act_window'>
-        <field name="name">Commands</field>
-        <field name="res_model">gpsmap_commands</field>
-    </record>    
-    <menuitem action="fleet_gpsmap_commands_action" parent="fleet.fleet_configuration" id="fleet_gpsmap_commands_menu" groups="fleet.fleet_group_manager"/>
-
-    <record id='fleet_device_commands_action' model='ir.actions.act_window'>
-        <field name="name">Device Commands</field>
-        <field name="res_model">device_commands</field>
-    </record>    
-    <menuitem action="fleet_device_commands_action" parent="fleet.fleet_configuration" id="fleet_device_commands_menu" groups="fleet.fleet_group_manager"/>
 
 </odoo>

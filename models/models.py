@@ -9,12 +9,12 @@ import base64
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
 import pytz
-class fuel(models.Model):
-    _inherit = "fleet.vehicle.log.fuel"
+#class fuel(models.Model):
+#    _inherit = "fleet.vehicle.log.fuel"
 class services(models.Model):
     _inherit = "fleet.vehicle.log.services"
-class cost(models.Model):
-    _inherit = "fleet.vehicle.cost"
+#class cost(models.Model):
+#    _inherit = "fleet.vehicle.cost"
 class contract(models.Model):
     _inherit = "fleet.vehicle.log.contract"
 class vehicle_model(models.Model):

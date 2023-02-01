@@ -1,7 +1,7 @@
 
 import datetime, time
 import requests, json
-import random
+#import random
 import base64
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
@@ -38,14 +38,7 @@ class tc_devices(models.Model):
                 return data 
 
         return  super(tc_devices, self).create(vals)
-    
-        """    
-    @api.one
-    def write(self, vals):  
-        return super(tc_devices, self).write(vals)
-        """
 
-    @api.one
     def execute_commands(self, vals):
         data_return={"device":{},"status_command":{}}
         traccar_host                 =self.env['ir.config_parameter'].sudo().get_param('traccar_host','')
@@ -64,7 +57,6 @@ class tc_devices(models.Model):
 
         device = self.env.cr.dictfetchall()[0]
 
-        print(device)
         if(self.env.user.login=="developer"):
             return {"status": "error", "message": "Developer user does not have permissions, needs a paid account"}
 
@@ -80,8 +72,7 @@ class tc_devices(models.Model):
                 "textChannel"   :"false",
                 "attributes"    :{}
             } 
- 
-            ##headers = {	"Authorization": "Basic " + encoded		}
+             
             headers                 = {	"Authorization": "Basic YWRtaW46YWRtaW4=","content-type": "application/json"}
             req                     = requests.post(url, data=json.dumps(payload), headers=headers)
             req.raise_for_status()
@@ -89,4 +80,3 @@ class tc_devices(models.Model):
             json_traccar            = req.json()
 
         return json.dumps(json_traccar)
-        

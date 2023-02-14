@@ -37,6 +37,7 @@ class tc_devices(models.Model):
         if "uniqueid" in vals:            
             devices_arg = [('uniqueid', '=', vals["uniqueid"])]
             data = self.search(devices_arg)
+            print(data)
             if(data):
                 return data 
 

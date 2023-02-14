@@ -32,6 +32,8 @@ class tc_devices(models.Model):
 
     @api.model
     def create(self, vals):
+        print("#######################")}
+        print(vals)
         if "uniqueid" in vals:            
             devices_arg = [('uniqueid', '=', vals["uniqueid"])]
             data = self.search(devices_arg)

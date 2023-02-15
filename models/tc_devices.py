@@ -43,6 +43,9 @@ class tc_devices(models.Model):
                 return data 
             if("positionid" in vals and vals["positionid"]==False):
                  vals.pop("positionid")
+            if("company_id" in vals):
+                 vals.pop("company_id")
+                 
         print(vals)
         return  super().create(vals)
 

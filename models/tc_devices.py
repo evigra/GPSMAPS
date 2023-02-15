@@ -88,7 +88,7 @@ class tc_devices(models.Model):
             vals.pop("positionid")
         if("company_id" in vals):
             vals.pop("company_id")
-            
+        return vals   
     def execute_commands(self, vals):
         data_return={"device":{},"status_command":{}}
         traccar_host                 =self.env['ir.config_parameter'].sudo().get_param('traccar_host','')

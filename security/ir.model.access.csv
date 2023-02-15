@@ -7,3 +7,4 @@ access_gpsmap_positions_temporal,access_gpsmap_positions_temporal,model_gpsmap_p
 access_gpsmap_positions_user,access_gpsmap_positions_user,model_gpsmap_positions,fleet.fleet_group_user,1,0,1,0
 access_gpsmap_positions_admin,access_gpsmap_positions_admin,model_gpsmap_positions,gpsmap_group_admin,1,1,1,1
 access_tc_devices_template,access_tc_devices_template,model_tc_devices,gpsmap_group_template,1,0,1,0
+access_tc_devices_admin,access_tc_devices_admin,model_tc_devices,fleet.fleet_group_manager,1,1,1,1

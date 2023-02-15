@@ -29,7 +29,7 @@ class tc_devices(models.Model):
     _sql_constraints = [
         ('uniqueid_uniq', 'unique(uniqueid)', "The imei of the GPS device already exists"),
     ]    
-
+    """
     @api.model
     def create(self, vals):
         print("#######################")
@@ -48,7 +48,47 @@ class tc_devices(models.Model):
                  
         print(vals)
         return  super().create(vals)
+    
+    def save(self, vals):
+        
+        print("#######################")
+        print(vals)
+        if "uniqueid" in vals:            
+            devices_arg = [('uniqueid', '=', vals["uniqueid"])]
+            data = self.search(devices_arg)            
+            
+            if(data and len(data)>0):
+                return data 
+            if("positionid" in vals and vals["positionid"]==False):
+                 vals.pop("positionid")
+            if("company_id" in vals):
+                 vals.pop("company_id")
+                 
+        print(vals)
+    """
 
+    @api.model
+    def create(self, vals):
+        vals=self.save(vals)
+
+        if "uniqueid" in vals:            
+            devices_arg = [('uniqueid', '=', vals["uniqueid"])]
+            data = self.search(devices_arg)            
+            
+            if(data and len(data)>0):
+                return data 
+        return super().create(vals)
+
+    def write(self, vals):
+        rec = super().write(self.save(vals))
+        return rec
+
+    def save(self, vals):
+        if("positionid" in vals and vals["positionid"]==False):
+            vals.pop("positionid")
+        if("company_id" in vals):
+            vals.pop("company_id")
+            
     def execute_commands(self, vals):
         data_return={"device":{},"status_command":{}}
         traccar_host                 =self.env['ir.config_parameter'].sudo().get_param('traccar_host','')

@@ -41,7 +41,9 @@ class tc_devices(models.Model):
             if(data and len(data)>0):
                 print(data)
                 return data 
-
+            if(vals["positionid"]==False)
+                 vals.pop("positionid")
+        print(vals)
         return  super().create(vals)
 
     def execute_commands(self, vals):

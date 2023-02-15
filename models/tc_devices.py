@@ -42,7 +42,7 @@ class tc_devices(models.Model):
                 print(data)
                 return data 
 
-        return  super(tc_devices, self).create(vals)
+        return  super().create(vals)
 
     def execute_commands(self, vals):
         data_return={"device":{},"status_command":{}}

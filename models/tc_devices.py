@@ -36,10 +36,10 @@ class tc_devices(models.Model):
         print(vals)
         if "uniqueid" in vals:            
             devices_arg = [('uniqueid', '=', vals["uniqueid"])]
-            data = self.search(devices_arg)
-            print(data)
+            data = self.search(devices_arg)            
             
             if(data and len(data)>0):
+                print(data)
                 return data 
 
         return  super(tc_devices, self).create(vals)

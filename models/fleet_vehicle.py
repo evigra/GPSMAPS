@@ -154,7 +154,7 @@ class vehicle(models.Model):
 
                 CASE 				            
                     WHEN tp.attributes::json->>'alarm'!=''                      THEN 'alarm'
-                    WHEN now() between tp.devicetime - INTERVAL '15' MINUTE AND tp.devicetime + INTERVAL '15' MINUTE THEN 'Online'
+                    WHEN now() - INTERVAL '60' MINUTE between tp.devicetime - INTERVAL '15' MINUTE AND tp.devicetime + INTERVAL '15' MINUTE THEN 'Online'
                     ELSE 'Offline'
                 END  as status                
             FROM  fleet_vehicle fv
